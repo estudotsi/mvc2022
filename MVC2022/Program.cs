@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using MVC2022.Data;
+using MVC2022.Repositories;
+using MVC2022.Repositories.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +11,9 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 // Add services to the container.
 builder.Services.AddDbContext<AppDbContext>(opts => opts.UseSqlServer(connectionString));
+builder.Services.AddTransient<ICategoriaRepository, CategoriaRepository>();
+builder.Services.AddTransient<ILancheRepository, LancheRepository>();
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
